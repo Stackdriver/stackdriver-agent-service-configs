@@ -1,11 +1,4 @@
-# Replace JMX_HOST and JMX_PORT below with the values configured in your JVM
-# deployment.
-LoadPlugin java
-<Plugin "java">
-    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
-    LoadPlugin "org.collectd.java.GenericJMX"
-
-    <Plugin "GenericJMX">
+{% macro metrics(jmx_port='', jmx_host='localhost', jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST', service='JVM') -%}
         <MBean "jvm_localhost_Threading">
             ObjectName "java.lang:type=Threading"
             <Value>
@@ -136,7 +129,13 @@ LoadPlugin java
         </MBean>
 
         <Connection>
-            ServiceURL "service:jmx:rmi:///jndi/rmi://JMX_HOST:JMX_PORT/jmxrmi"
+            {% if jmx_port -%}
+            # When using non-standard {{service}} configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host_alt_name}}:{{jmx_port_alt_name}}/jmxrmi"
+            ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host}}:{{jmx_port}}/jmxrmi"
+            {%- else -%}
+            ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host_alt_name}}:{{jmx_port_alt_name}}/jmxrmi"
+            {%- endif %}
             InstancePrefix "jvm"
 
             Collect "jvm_localhost_Threading"
@@ -145,12 +144,9 @@ LoadPlugin java
             Collect "jvm_localhost_os"
             Collect "jvm_localhost_gc"
         </Connection>
-    </Plugin>
-</Plugin>
+{%- endmacro %}
 
-LoadPlugin match_regex
-LoadPlugin target_set
-LoadPlugin target_replace
+{% macro chains() -%}
 <Chain "GenericJMX_jvm">
     <Rule "rewrite_genericjmx_to_jvm">
         <Match regex>
@@ -175,3 +171,4 @@ LoadPlugin target_replace
     </Rule>
 </Chain>
 PreCacheChain "PreCache"
+{%- endmacro %}
