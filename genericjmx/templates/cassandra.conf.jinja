@@ -15,7 +15,7 @@ LoadPlugin java
                 Attribute "Load"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "storage_service-exception_count"
                 Table false
                 Attribute "ExceptionCount"
@@ -26,15 +26,15 @@ LoadPlugin java
             ObjectName "org.apache.cassandra.db:type=Commitlog"
             <Value>
                 Type "gauge"
-                InstancePrefix "commitlog-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "commitlog-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "commitlog-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -53,7 +53,7 @@ LoadPlugin java
                 Attribute "PendingTasks"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "compaction_manager-completed_tasks"
                 Table false
                 Attribute "CompletedTasks"
@@ -70,12 +70,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "mutation_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "mutation_stage-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -85,6 +79,12 @@ LoadPlugin java
                 InstancePrefix "mutation_stage-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "mutation_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
 
@@ -98,12 +98,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "read_repair_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "read_repair_stage-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -113,6 +107,12 @@ LoadPlugin java
                 InstancePrefix "read_repair_stage-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "read_repair_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
 
@@ -126,12 +126,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "read_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "read_stage-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -141,6 +135,12 @@ LoadPlugin java
                 InstancePrefix "read_stage-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "read_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
 
@@ -154,12 +154,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "replicate_on_write_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "replicate_on_write_stage-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -169,6 +163,12 @@ LoadPlugin java
                 InstancePrefix "replicate_on_write_stage-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "replicate_on_write_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
 
@@ -182,12 +182,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "request_response_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "request_response_stage-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -197,6 +191,12 @@ LoadPlugin java
                 InstancePrefix "request_response_stage-pending_tasks"
                 Table false
                 Attribute "PendingTasks"
+            </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "request_response_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
 
@@ -210,12 +210,6 @@ LoadPlugin java
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "anti_entropy_sessions-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "anti_entropy_sessions-currently_blocked_tasks"
                 Table false
                 Attribute "CurrentlyBlockedTasks"
@@ -226,7 +220,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "anti_entropy_sessions-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_AntiEntropyStage">
@@ -236,12 +235,6 @@ LoadPlugin java
                 InstancePrefix "anti_entropy_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "anti_entropy_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -255,7 +248,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "anti_entropy_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_FlushWriter">
@@ -265,12 +263,6 @@ LoadPlugin java
                 InstancePrefix "flush_writer-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "flush_writer-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -284,7 +276,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "flush_writer-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_GossipStage">
@@ -294,12 +291,6 @@ LoadPlugin java
                 InstancePrefix "gossip_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "gossip_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -313,7 +304,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "gossip_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_HintedHandoff">
@@ -323,12 +319,6 @@ LoadPlugin java
                 InstancePrefix "hinted_handoff-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "hinted_handoff-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -342,6 +332,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "hinted_handoff-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_InternalResponseStage">
@@ -351,12 +347,6 @@ LoadPlugin java
                 InstancePrefix "internal_response_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "internal_response_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -370,7 +360,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "internal_response_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_MemtablePostFlusher">
@@ -380,12 +375,6 @@ LoadPlugin java
                 InstancePrefix "memtable_post_flusher-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "memtable_post_flusher-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -399,7 +388,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-
+            <Value>
+                Type "counter"
+                InstancePrefix "memtable_post_flusher-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_MigrationStage">
@@ -409,12 +403,6 @@ LoadPlugin java
                 InstancePrefix "migration_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "migration_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -428,6 +416,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "migration_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_MiscStage">
@@ -437,12 +431,6 @@ LoadPlugin java
                 InstancePrefix "misc_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "misc_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -456,6 +444,12 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
+            <Value>
+                Type "counter"
+                InstancePrefix "misc_stage-completed_tasks"
+                Table false
+                Attribute "CompletedTasks"
+            </Value>
         </MBean>
 
         <MBean "cassandra_internal_StreamStage">
@@ -465,12 +459,6 @@ LoadPlugin java
                 InstancePrefix "stream_stage-active_count"
                 Table false
                 Attribute "ActiveCount"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "stream_stage-completed_tasks"
-                Table false
-                Attribute "CompletedTasks"
             </Value>
             <Value>
                 Type "gauge"
@@ -484,36 +472,13 @@ LoadPlugin java
                 Table false
                 Attribute "PendingTasks"
             </Value>
-        </MBean>
-
-        <MBean "cassandra_internal_StorageProxy">
-            ObjectName "org.apache.cassandra.db:type=StorageProxy"
             <Value>
-                Type "gauge"
-                InstancePrefix "storage_proxy-recent_read_latency_micros"
+                Type "counter"
+                InstancePrefix "stream_stage-completed_tasks"
                 Table false
-                Attribute "RecentReadLatencyMicros"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "storage_proxy-recent_write_latency_micros"
-                Table false
-                Attribute "RecentWriteLatencyMicros"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "storage_proxy-recent_range_latency_micros"
-                Table false
-                Attribute "RecentRangeLatencyMicros"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "storage_proxy-hints_in_progress"
-                Table false
-                Attribute "HintsInProgress"
+                Attribute "CompletedTasks"
             </Value>
         </MBean>
-
 
         <Connection>
             # When using non-standard Cassandra configurations, replace the below with
@@ -539,7 +504,6 @@ LoadPlugin java
             Collect "cassandra_internal_MigrationStage"
             Collect "cassandra_internal_MiscStage"
             Collect "cassandra_internal_StreamStage"
-            Collect "cassandra_internal_StorageProxy"
         </Connection>
 
         {{ jvm.metrics(jmx_port=7199, jmx_port_alt_name='CASSANDRA_PORT', jmx_host_alt_name='CASSANDRA_HOST', service='Cassandra') }}
