@@ -74,24 +74,6 @@
         <MBean "jvm_localhost_os">
             ObjectName "java.lang:type=OperatingSystem"
             <Value>
-                Type "memory"
-                InstancePrefix "os-committed_virtual_memory_size"
-                Table false
-                Attribute "CommittedVirtualMemorySize"
-            </Value>
-            <Value>
-                Type "memory"
-                InstancePrefix "os-free_physical_memory_size"
-                Table false
-                Attribute "FreePhysicalMemorySize"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "os-free_swap_space_size"
-                Table false
-                Attribute "FreeSwapSpaceSize"
-            </Value>
-            <Value>
                 Type "gauge"
                 InstancePrefix "os-open_fd_count"
                 Table false
@@ -102,12 +84,6 @@
                 InstancePrefix "os-process_cpu_time"
                 Table false
                 Attribute "ProcessCpuTime"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "os-system_load_average"
-                Table false
-                Attribute "SystemLoadAverage"
             </Value>
         </MBean>
 
@@ -151,7 +127,7 @@
     <Rule "rewrite_genericjmx_to_jvm">
         <Match regex>
             Plugin "^GenericJMX$"
-            PluginInstance "jvm.*"
+            PluginInstance "^jvm.*$"
         </Match>
         <Target "replace">
             PluginInstance "jvm" ""
