@@ -1,0 +1,18 @@
+{% extends 'hbase-098.conf.jinja' -%}
+{% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
+{% block header_comment -%}
+# Look for HBASE_HOST and HBASE_PORT to adjust your configuration file.
+{%- endblock %}
+{% block master_service_url -%}
+            # When using non-standard HBase configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://HBASE_HOST:HBASE_PORT/jmxrmi"
+            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:10101/jmxrmi"
+{%- endblock %}
+{% block regionserver_service_url -%}
+            # When using non-standard HBase configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://HBASE_HOST:HBASE_PORT/jmxrmi"
+            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:10101/jmxrmi"
+{%- endblock %}
+{% block jvm_metrics -%}
+        {{ jvm.metrics(jmx_port=10101, jmx_port_alt_name='HBASE_PORT', jmx_host_alt_name='HBASE_HOST', service='HBase') }}
+{%- endblock %}
