@@ -1,5 +1,6 @@
 {% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
 {% block header_comment -%}
+# This is the monitoring configuration for HBase 0.9.8 and later running in distributed mode.
 # Look for HBASE_HOST, HBASE_MASTER_PORT, and HBASE_REGIONSERVER_PORT to adjust your configuration file.
 {%- endblock %}
 LoadPlugin java
