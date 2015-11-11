@@ -592,6 +592,8 @@ LoadPlugin java
 
 
         <Connection>
+            # When using non-standard Cassandra configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://CASSANDRA_HOST:CASSANDRA_PORT/jmxrmi"
             ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi"
             InstancePrefix "cassandra"
 
