@@ -1,6 +1,6 @@
 {% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
-# Replace JMX_HOST and JMX_PORT below with the values configured in your JVM
-# deployment.
+# This is the monitoring configuration for standalone JVMs.
+# Replace JMX_HOST and JMX_PORT below with the values configured in your JVM deployment.
 LoadPlugin java
 <Plugin "java">
     JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
