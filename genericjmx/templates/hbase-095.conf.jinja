@@ -65,21 +65,21 @@ LoadPlugin java
                 Attribute "numberOfOnlineRegions"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 # Renamed for consistency with newer metrics.
                 InstancePrefix "regionserver-readRequestCount"
                 Table false
                 Attribute "readRequestsCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 # Renamed for consistency with newer metrics.
                 InstancePrefix "regionserver-writeRequestCount"
                 Table false
                 Attribute "writeRequestsCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 # Renamed for consistency with newer metrics.
                 InstancePrefix "regionserver-slowAppendCount"
                 Table false
@@ -98,7 +98,7 @@ LoadPlugin java
                 Attribute "blockCacheCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheEvictedCount"
                 Table false
                 Attribute "blockCacheEvictedCount"
@@ -110,13 +110,13 @@ LoadPlugin java
                 Attribute "blockCacheFreeMB"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheHitCount"
                 Table false
                 Attribute "blockCacheHitCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheMissCount"
                 Table false
                 Attribute "blockCacheMissCount"
