@@ -34,13 +34,13 @@ LoadPlugin java
         <MBean "hbase_ipc_IPC">
             ObjectName "Hadoop:service=HBase,name=IPC,sub=IPC"
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "ipc-sentBytes"
                 Table false
                 Attribute "sentBytes"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "ipc-receivedBytes"
                 Table false
                 Attribute "receivedBytes"
@@ -68,7 +68,7 @@ LoadPlugin java
                 Attribute "blockCacheCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheEvictedCount"
                 Table false
                 Attribute "blockCacheEvictedCount"
@@ -80,7 +80,7 @@ LoadPlugin java
                 Attribute "blockCacheFreeSize"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheHitCount"
                 Table false
                 Attribute "blockCacheHitCount"
@@ -92,7 +92,7 @@ LoadPlugin java
                 Attribute "blockCacheHitPercent"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-blockCacheMissCount"
                 Table false
                 Attribute "blockCacheMissCount"
@@ -128,7 +128,7 @@ LoadPlugin java
                 Attribute "storeCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-readRequestCount"
                 Table false
                 Attribute "readRequestCount"
@@ -140,31 +140,31 @@ LoadPlugin java
                 Attribute "storeFileIndexSize"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-writeRequestCount"
                 Table false
                 Attribute "writeRequestCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-totalRequestCount"
                 Table false
                 Attribute "totalRequestCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-slowAppendCount"
                 Table false
                 Attribute "slowAppendCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-slowPutCount"
                 Table false
                 Attribute "slowPutCount"
             </Value>
             <Value>
-                Type "gauge"
+                Type "counter"
                 InstancePrefix "regionserver-slowGetCount"
                 Table false
                 Attribute "slowGetCount"
