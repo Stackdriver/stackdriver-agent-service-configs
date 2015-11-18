@@ -81,7 +81,6 @@ LoadPlugin java
             Collect "tomcat_connectors"
             Collect "tomcat_manager"
             Collect "tomcat_requestProcessor"
-            Collect "tomcat_data-source"
         </Connection>
 
         {{ jvm.metrics(jmx_port=9012, jmx_port_alt_name='TOMCAT_PORT', jmx_host_alt_name='TOMCAT_HOST', service='Tomcat') }}
