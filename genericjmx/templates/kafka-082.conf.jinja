@@ -1,0 +1,300 @@
+{% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
+# This is the monitoring configuration for Apache Kafka 0.8.2 and later.
+# Look for KAFKA_HOST and KAFKA_PORT to adjust your configuration file.
+LoadPlugin java
+<Plugin "java">
+    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
+    LoadPlugin "org.collectd.java.GenericJMX"
+
+    <Plugin "GenericJMX">
+        <MBean "kafka_log-LogFlushStats_LogFlush">
+            ObjectName "kafka.log:type=LogFlushStats,name=LogFlushRateAndTimeMs"
+            <Value>
+                Type "counter"
+                InstancePrefix "log-LogFlushes"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_server-BrokerTopicMetrics_AllTopicsBytesIn">
+            ObjectName "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_broker_topics-AllTopicsBytesIn"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-BrokerTopicMetrics_AllTopicsFailedFetchRequests">
+            ObjectName "kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_broker_topics-AllTopicsFailedFetchRequests"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-BrokerTopicMetrics_AllTopicsFailedProduceRequests">
+            ObjectName "kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_broker_topics-AllTopicsFailedProduceRequests"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-BrokerTopicMetrics_AllTopicsMessagesIn">
+            ObjectName "kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_broker_topics-AllTopicsMessagesIn"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-BrokerTopicMetrics_AllTopicsBytesOut">
+            ObjectName "kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_broker_topics-AllTopicsBytesOut"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_server-ReplicaManager_UnderReplicatedPartitions">
+            ObjectName "kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_replica_manager-UnderReplicatedPartitions"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ReplicaManager_PartitionCount">
+            ObjectName "kafka.server:type=ReplicaManager,name=PartitionCount"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_replica_manager-PartitionCount"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ReplicaManager_LeaderCount">
+            ObjectName "kafka.server:type=ReplicaManager,name=LeaderCount"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_replica_manager-LeaderCount"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ReplicaManager_ISRShrinks">
+            ObjectName "kafka.server:type=ReplicaManager,name=IsrShrinksPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_replica_manager-ISRShrinks"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ReplicaManager_ISRExpands">
+            ObjectName "kafka.server:type=ReplicaManager,name=IsrExpandsPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "server_replica_manager-ISRExpands"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_server-ReplicaFetcherManager_MaxLag">
+            ObjectName "kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_replica_fetcher-MaxLag"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ReplicaFetcherManager_MinFetchRate">
+            ObjectName "kafka.server:type=ReplicaFetcherManager,name=MinFetchRate,clientId=Replica"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_replica_fetcher-MinFetchRate"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_server-ProducerRequestPurgatory_NumDelayedRequests">
+            ObjectName "kafka.server:type=ProducerRequestPurgatory,name=NumDelayedRequests"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_purgatory-Producer-NumDelayedRequests"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-ProducerRequestPurgatory_PurgatorySize">
+            ObjectName "kafka.server:type=ProducerRequestPurgatory,name=PurgatorySize"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_purgatory-Producer-PurgatorySize"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_server-FetchRequestPurgatory_NumDelayedRequests">
+            ObjectName "kafka.server:type=FetchRequestPurgatory,name=NumDelayedRequests"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_purgatory-Fetch-NumDelayedRequests"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_server-FetchRequestPurgatory_PurgatorySize">
+            ObjectName "kafka.server:type=FetchRequestPurgatory,name=PurgatorySize"
+            <Value>
+                Type "gauge"
+                InstancePrefix "server_purgatory-Fetch-PurgatorySize"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_network-RequestMetrics_ProduceRequests">
+            ObjectName "kafka.network:type=RequestMetrics,name=RequestsPerSec,request=Produce"
+            <Value>
+                Type "counter"
+                InstancePrefix "network-ProduceRequests"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_network-RequestMetrics_FetchFollowerRequests">
+            ObjectName "kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchFollower"
+            <Value>
+                Type "counter"
+                InstancePrefix "network-FetchFollowerRequests"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_network-RequestMetrics_FetchConsumerRequests">
+            ObjectName "kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchConsumer"
+            <Value>
+                Type "counter"
+                InstancePrefix "network-FetchConsumerRequests"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_controller-KafkaController_ActiveControllerCount">
+            ObjectName "kafka.controller:type=KafkaController,name=ActiveControllerCount"
+            <Value>
+                Type "gauge"
+                InstancePrefix "controller_kafka-ActiveControllerCount"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+        <MBean "kafka_controller-KafkaController_OfflinePartitionsCount">
+            ObjectName "kafka.controller:type=KafkaController,name=OfflinePartitionsCount"
+            <Value>
+                Type "gauge"
+                InstancePrefix "controller_kafka-OfflinePartitionsCount"
+                Table false
+                Attribute "Value"
+            </Value>
+        </MBean>
+
+        <MBean "kafka_controller-ControllerStats_LeaderElection">
+            ObjectName "kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs"
+            <Value>
+                Type "counter"
+                InstancePrefix "controller-LeaderElection"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+        <MBean "kafka_controller-ControllerStats_UncleanLeaderElection">
+            ObjectName "kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec"
+            <Value>
+                Type "counter"
+                InstancePrefix "controller-UncleanLeaderElection"
+                Table false
+                Attribute "Count"
+            </Value>
+        </MBean>
+
+
+        <Connection>
+            # When using non-standard Kafka configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://KAFKA_HOST:KAFKA_PORT/jmxrmi"
+            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi"
+            InstancePrefix "kafka"
+
+            Collect "kafka_log-LogFlushStats_LogFlush"
+            Collect "kafka_server-BrokerTopicMetrics_AllTopicsBytesIn"
+            Collect "kafka_server-BrokerTopicMetrics_AllTopicsFailedFetchRequests"
+            Collect "kafka_server-BrokerTopicMetrics_AllTopicsFailedProduceRequests"
+            Collect "kafka_server-BrokerTopicMetrics_AllTopicsMessagesIn"
+            Collect "kafka_server-BrokerTopicMetrics_AllTopicsBytesOut"
+            Collect "kafka_server-ReplicaManager_UnderReplicatedPartitions"
+            Collect "kafka_server-ReplicaManager_PartitionCount"
+            Collect "kafka_server-ReplicaManager_LeaderCount"
+            Collect "kafka_server-ReplicaManager_ISRShrinks"
+            Collect "kafka_server-ReplicaManager_ISRExpands"
+            Collect "kafka_server-ReplicaFetcherManager_MaxLag"
+            Collect "kafka_server-ReplicaFetcherManager_MinFetchRate"
+            Collect "kafka_server-ProducerRequestPurgatory_NumDelayedRequests"
+            Collect "kafka_server-ProducerRequestPurgatory_PurgatorySize"
+            Collect "kafka_server-FetchRequestPurgatory_NumDelayedRequests"
+            Collect "kafka_server-FetchRequestPurgatory_PurgatorySize"
+            Collect "kafka_network-RequestMetrics_ProduceRequests"
+            Collect "kafka_network-RequestMetrics_FetchFollowerRequests"
+            Collect "kafka_network-RequestMetrics_FetchConsumerRequests"
+            Collect "kafka_controller-KafkaController_ActiveControllerCount"
+            Collect "kafka_controller-KafkaController_OfflinePartitionsCount"
+            Collect "kafka_controller-ControllerStats_LeaderElection"
+            Collect "kafka_controller-ControllerStats_UncleanLeaderElection"
+        </Connection>
+
+        {{ jvm.metrics(jmx_port=9999, jmx_port_alt_name='KAFKA_PORT', jmx_host_alt_name='KAFKA_HOST', service='Kafka') }}
+    </Plugin>
+</Plugin>
+
+LoadPlugin match_regex
+LoadPlugin target_set
+LoadPlugin target_replace
+<Chain "GenericJMX_kafka">
+    <Rule "rewrite_genericjmx_to_kafka">
+        <Match regex>
+            Plugin "^GenericJMX$"
+            PluginInstance "^kafka.*$"
+        </Match>
+        <Target "replace">
+            PluginInstance "kafka" ""
+        </Target>
+        <Target "set">
+            Plugin "kafka"
+        </Target>
+        Target "return"
+    </Rule>
+</Chain>
+
+<Chain "PreCache">
+    <Rule "jump_to_GenericJMX_kafka">
+        <Target "jump">
+            Chain "GenericJMX_kafka"
+        </Target>
+    </Rule>
+</Chain>
+PreCacheChain "PreCache"
+
+{{ jvm.chains() }}
