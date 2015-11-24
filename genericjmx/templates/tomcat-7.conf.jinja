@@ -13,13 +13,13 @@ LoadPlugin java
             InstanceFrom "name"
             <Value>
                 Type "gauge"
-                InstancePrefix "tomcat_connectors-current_threads"
+                InstancePrefix "connectors-current_threads"
                 Table false
                 Attribute "currentThreadCount"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "tomcat_connectors-busy_threads"
+                InstancePrefix "connectors-busy_threads"
                 Table false
                 Attribute "currentThreadsBusy"
             </Value>
@@ -30,7 +30,7 @@ LoadPlugin java
             InstanceFrom "context"
             <Value>
                 Type "gauge"
-                InstancePrefix "tomcat_manager-active_sessions"
+                InstancePrefix "manager-active_sessions"
                 Table false
                 Attribute "activeSessions"
             </Value>
@@ -41,31 +41,31 @@ LoadPlugin java
             InstanceFrom "name"
             <Value>
                 Type "counter"
-                InstancePrefix "tomcat_requestProcessor-bytes_received"
+                InstancePrefix "request_processor-bytes_received"
                 Table false
                 Attribute "bytesReceived"
             </Value>
             <Value>
                 Type "counter"
-                InstancePrefix "tomcat_requestProcessor-bytes_sent"
+                InstancePrefix "request_processor-bytes_sent"
                 Table false
                 Attribute "bytesSent"
             </Value>
             <Value>
                 Type "counter"
-                InstancePrefix "tomcat_requestProcessor-error_count"
+                InstancePrefix "request_processor-error_count"
                 Table false
                 Attribute "errorCount"
             </Value>
             <Value>
                 Type "counter"
-                InstancePrefix "tomcat_requestProcessor-processing_time"
+                InstancePrefix "request_processor-processing_time"
                 Table false
                 Attribute "processingTime"
             </Value>
             <Value>
                 Type "counter"
-                InstancePrefix "tomcat_requestProcessor-request_count"
+                InstancePrefix "request_processor-request_count"
                 Table false
                 Attribute "requestCount"
             </Value>
