@@ -105,13 +105,13 @@
         </MBean>
 
         <Connection>
-            {% if jmx_port -%}
+            {% if jmx_port %}
             # When using non-standard {{service}} configurations, replace the below with
             #ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host_alt_name}}:{{jmx_port_alt_name}}/jmxrmi"
             ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host}}:{{jmx_port}}/jmxrmi"
-            {%- else -%}
+            {% else %}
             ServiceURL "service:jmx:rmi:///jndi/rmi://{{jmx_host_alt_name}}:{{jmx_port_alt_name}}/jmxrmi"
-            {%- endif %}
+            {% endif %}
             InstancePrefix "jvm"
 
             Collect "jvm_localhost_Threading"

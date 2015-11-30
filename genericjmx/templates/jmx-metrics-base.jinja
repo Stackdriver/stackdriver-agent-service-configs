@@ -1,0 +1,85 @@
+{% import 'jvm-sun-hotspot-macros.jinja' as jvm %}
+{% macro mbean(name, mbean_list) %}
+  {% do mbean_list.append(name) %}
+        <MBean "{{ name }}">
+            {{ caller() }}
+        </MBean>
+{% endmacro %}
+{% block header_comment %}
+# This is the monitoring configuration for {% block target %}standalone JVMs{% endblock %}.
+# Look for {% block host_port_variables %}{% block jmx_host_alt_name %}{% block jmx_host_port_prefix %}JMX{% endblock %}_HOST{% endblock %} and {% block jmx_port_alt_name %}{{ self.jmx_host_port_prefix() }}_PORT{% endblock %}{% endblock host_port_variables %} to adjust your configuration file.
+{% endblock header_comment %}
+LoadPlugin java
+<Plugin "java">
+    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
+    LoadPlugin "org.collectd.java.GenericJMX"
+
+    <Plugin "GenericJMX">
+{% set mbeans = [] %}
+{% block non_java_metrics %}
+  {% block mbean_list %}
+  {% endblock %}
+
+
+  {% block connections %}
+        <Connection>
+            {% block service_url %}
+            # When using non-standard {% block service %}JVM{% endblock %} configurations, replace the below with
+            #ServiceURL "service:jmx:rmi:///jndi/rmi://{{ self.jmx_host_alt_name() }}:{{ self.jmx_port_alt_name() }}/jmxrmi"
+            ServiceURL "service:jmx:rmi:///jndi/rmi://{% block jmx_host %}localhost{% endblock %}:{% block jmx_port %}{% endblock %}/jmxrmi"
+            {% endblock service_url %}
+            InstancePrefix "{% block instance_prefix %}{{ self.service()|lower }}{% endblock %}"
+
+    {% for mbean in mbeans %}
+            Collect "{{ mbean }}"
+    {% endfor %}
+        </Connection>
+  {% endblock connections %}
+
+
+{% endblock non_java_metrics %}
+{% block jvm_metrics %}
+        {{ jvm.metrics(jmx_port=self.jmx_port(), jmx_port_alt_name=self.jmx_port_alt_name(), jmx_host_alt_name=self.jmx_host_alt_name(), service=self.service()) }}
+{% endblock jvm_metrics %}
+    </Plugin>
+</Plugin>
+
+LoadPlugin match_regex
+LoadPlugin target_set
+LoadPlugin target_replace
+{% block extra_plugins %}
+{% endblock %}
+{% block service_chains %}
+<Chain "GenericJMX_{{ self.service()|lower }}">
+    <Rule "rewrite_genericjmx_to_{{ self.service()|lower }}">
+        <Match regex>
+            Plugin "^GenericJMX$"
+            PluginInstance "^{{ self.service()|lower }}.*$"
+        </Match>
+        <Target "replace">
+            PluginInstance "{{ self.service()|lower }}" ""
+        </Target>
+        <Target "set">
+            Plugin "{{ self.service()|lower }}"
+        </Target>
+    </Rule>
+    {% block extra_rules %}
+    {% endblock %}
+    <Rule "go_back">
+        Target "return"
+    </Rule>
+</Chain>
+
+<Chain "PreCache">
+    <Rule "jump_to_GenericJMX_{{ self.service()|lower }}">
+        <Target "jump">
+            Chain "GenericJMX_{{ self.service()|lower }}"
+        </Target>
+    </Rule>
+</Chain>
+PreCacheChain "PreCache"
+
+{% endblock service_chains %}
+{% block jvm_chains %}
+{{- jvm.chains() -}}
+{% endblock jvm_chains %}
