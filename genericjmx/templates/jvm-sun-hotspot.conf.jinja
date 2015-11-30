@@ -1,17 +1,8 @@
-{% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
+{% extends "jmx-metrics-base.jinja" %}
+{% block header_comment %}
 # This is the monitoring configuration for standalone JVMs.
-# Replace JMX_HOST and JMX_PORT below with the values configured in your JVM deployment.
-LoadPlugin java
-<Plugin "java">
-    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
-    LoadPlugin "org.collectd.java.GenericJMX"
-
-    <Plugin "GenericJMX">
-        {{ jvm.metrics(jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST') }}
-    </Plugin>
-</Plugin>
-
-LoadPlugin match_regex
-LoadPlugin target_set
-LoadPlugin target_replace
-{{ jvm.chains() }}
+# Replace {% block jmx_host_alt_name %}JMX_HOST{% endblock %} and {% block jmx_port_alt_name %}JMX_PORT{% endblock %} below with the values configured in your JVM deployment.
+{% endblock header_comment %}
+{% block service %}JVM{% endblock %}
+{% block non_java_metrics %}{% endblock %}
+{% block service_chains %}{% endblock %}

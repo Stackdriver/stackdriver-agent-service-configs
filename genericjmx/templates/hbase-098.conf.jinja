@@ -1,15 +1,15 @@
-{% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
-{% block header_comment -%}
-# This is the monitoring configuration for HBase 0.98 and later running in distributed mode.
-# Look for HBASE_HOST, HBASE_MASTER_PORT, and HBASE_REGIONSERVER_PORT to adjust your configuration file.
-{%- endblock %}
-LoadPlugin java
-<Plugin "java">
-    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
-    LoadPlugin "org.collectd.java.GenericJMX"
-
-    <Plugin "GenericJMX">
-        <MBean "hbase_master_Server">
+{% extends "jmx-metrics-base.jinja" %}
+{% block target %}HBase 0.98 and later running in distributed mode{% endblock %}
+{% block service %}HBase{% endblock %}
+{% block instance_prefix %}%(instance_prefix)s{% endblock %}
+{% block jmx_host_alt_name %}HBASE_HOST{% endblock %}
+{% block jmx_port_alt_name %}%(jmx_port_alt_name)s{% endblock %}
+{% block jmx_port %}%(jmx_port)s{% endblock %}
+{% block host_port_variables %}HBASE_HOST, HBASE_MASTER_PORT, and HBASE_REGIONSERVER_PORT{% endblock %}
+{% set master_mbeans = [] %}
+{% set regionserver_mbeans = [] %}
+{% block mbean_list %}
+        {% call mbean("hbase_master_Server", master_mbeans) -%}
             ObjectName "Hadoop:service=HBase,name=Master,sub=Server"
             <Value>
                 Type "gauge"
@@ -29,9 +29,9 @@ LoadPlugin java
                 Table false
                 Attribute "numDeadRegionServers"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "hbase_ipc_IPC">
+        {% call mbean("hbase_ipc_IPC", master_mbeans) -%}
             ObjectName "Hadoop:service=HBase,name=IPC,sub=IPC"
             <Value>
                 Type "counter"
@@ -57,9 +57,9 @@ LoadPlugin java
                 Table false
                 Attribute "numOpenConnections"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "hbase_regionserver_RegionServerStatistics">
+        {% call mbean("hbase_regionserver_RegionServerStatistics", regionserver_mbeans) -%}
             ObjectName "Hadoop:service=HBase,name=RegionServer,sub=Server"
             <Value>
                 Type "gauge"
@@ -169,65 +169,16 @@ LoadPlugin java
                 Table false
                 Attribute "slowGetCount"
             </Value>
-        </MBean>
-
-
-        <Connection>
-            {% block master_service_url -%}
-            # When using non-standard HBase configurations, replace the below with
-            #ServiceURL "service:jmx:rmi:///jndi/rmi://HBASE_HOST:HBASE_MASTER_PORT/jmxrmi"
-            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:10101/jmxrmi"
-            {%- endblock %}
-            InstancePrefix "hbasemaster"
-
-            Collect "hbase_master_Server"
-            Collect "hbase_ipc_IPC"
-        </Connection>
-
-        <Connection>
-            {% block regionserver_service_url -%}
-            # When using non-standard HBase configurations, replace the below with
-            #ServiceURL "service:jmx:rmi:///jndi/rmi://HBASE_HOST:HBASE_REGIONSERVER_PORT/jmxrmi"
-            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:10102/jmxrmi"
-            {%- endblock %}
-            InstancePrefix "hbaseregionserver"
-
-            Collect "hbase_regionserver_RegionServerStatistics"
-        </Connection>
-
+        {%- endcall %}
+{% endblock mbean_list %}
+{% block connections %}
+  {% do mbeans.extend(master_mbeans) %}
+  {{- super()|format(jmx_port=10101, jmx_port_alt_name='HBASE_MASTER_PORT', instance_prefix='hbasemaster') }}
+  {% for i in range(0, mbeans|count) %}{% do mbeans.pop() %}{% endfor %}
+  {% do mbeans.extend(regionserver_mbeans) %}
+  {{- super()|format(jmx_port=10102, jmx_port_alt_name='HBASE_REGIONSERVER_PORT', instance_prefix='hbaseregionserver') -}}
+{% endblock connections %}
+{% block jvm_metrics %}
         {# TODO: find a way to collect JVM metrics from both master and regionserver #}
-        {% block jvm_metrics -%}
-        {{ jvm.metrics(jmx_port=10102, jmx_port_alt_name='HBASE_REGIONSERVER_PORT', jmx_host_alt_name='HBASE_HOST', service='HBase') }}
-        {%- endblock %}
-    </Plugin>
-</Plugin>
-
-LoadPlugin match_regex
-LoadPlugin target_set
-LoadPlugin target_replace
-<Chain "GenericJMX_hbase">
-    <Rule "rewrite_genericjmx_to_hbase">
-        <Match regex>
-            Plugin "^GenericJMX$"
-            PluginInstance "^hbase.*$"
-        </Match>
-        <Target "replace">
-            PluginInstance "hbase" ""
-        </Target>
-        <Target "set">
-            Plugin "hbase"
-        </Target>
-        Target "return"
-    </Rule>
-</Chain>
-
-<Chain "PreCache">
-    <Rule "jump_to_GenericJMX_hbase">
-        <Target "jump">
-            Chain "GenericJMX_hbase"
-        </Target>
-    </Rule>
-</Chain>
-PreCacheChain "PreCache"
-
-{{ jvm.chains() }}
+        {{- super()|format(jmx_port=10102, jmx_port_alt_name='HBASE_REGIONSERVER_PORT') -}}
+{% endblock jvm_metrics %}

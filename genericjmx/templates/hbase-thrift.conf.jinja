@@ -1,12 +1,12 @@
-# This is the monitoring configuration for HBase Thrift.
-# Look for HBASE_HOST and HBASE_THRIFT_PORT to adjust your configuration file.
-LoadPlugin java
-<Plugin "java">
-    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
-    LoadPlugin "org.collectd.java.GenericJMX"
-
-    <Plugin "GenericJMX">
-        <MBean "hbase_thrift_ThriftOne">
+{% extends "jmx-metrics-base.jinja" %}
+{% block target %}HBase Thrift{% endblock %}
+{% block service %}HBase{% endblock %}
+{% block instance_prefix %}hbasethrift{% endblock %}
+{% block jmx_host_alt_name %}HBASE_HOST{% endblock %}
+{% block jmx_port_alt_name %}HBASE_THRIFT_PORT{% endblock %}
+{% block jmx_port %}10103{% endblock %}
+{% block mbean_list %}
+        {% call mbean("hbase_thrift_ThriftOne", mbeans) -%}
             ObjectName "Hadoop:service=HBase,name=Thrift,sub=ThriftOne"
             <Value>
                 Type "gauge"
@@ -44,9 +44,9 @@ LoadPlugin java
                 Table false
                 Attribute "BatchMutate_mean"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "hbase_thrift_ThriftTwo">
+        {% call mbean("hbase_thrift_ThriftTwo", mbeans) -%}
             ObjectName "Hadoop:service=HBase,name=Thrift,sub=ThriftTwo"
             <Value>
                 Type "gauge"
@@ -84,47 +84,9 @@ LoadPlugin java
                 Table false
                 Attribute "BatchMutate_mean"
             </Value>
-        </MBean>
-
-
-        <Connection>
-            # When using non-standard HBase configurations, replace the below with
-            #ServiceURL "service:jmx:rmi:///jndi/rmi://HBASE_HOST:HBASE_THRIFT_PORT/jmxrmi"
-            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:10103/jmxrmi"
-            InstancePrefix "hbasethrift"
-
-            Collect "hbase_thrift_ThriftOne"
-            Collect "hbase_thrift_ThriftTwo"
-        </Connection>
-
+        {%- endcall %}
+{% endblock mbean_list %}
+{% block jvm_metrics %}
         {# TODO: find a way to collect JVM metrics from the thrift JVM #}
-    </Plugin>
-</Plugin>
-
-LoadPlugin match_regex
-LoadPlugin target_set
-LoadPlugin target_replace
-<Chain "GenericJMX_hbase">
-    <Rule "rewrite_genericjmx_to_hbase">
-        <Match regex>
-            Plugin "^GenericJMX$"
-            PluginInstance "^hbase.*$"
-        </Match>
-        <Target "replace">
-            PluginInstance "hbase" ""
-        </Target>
-        <Target "set">
-            Plugin "hbase"
-        </Target>
-        Target "return"
-    </Rule>
-</Chain>
-
-<Chain "PreCache">
-    <Rule "jump_to_GenericJMX_hbase">
-        <Target "jump">
-            Chain "GenericJMX_hbase"
-        </Target>
-    </Rule>
-</Chain>
-PreCacheChain "PreCache"
+{% endblock jvm_metrics %}
+{% block jvm_chains %}{% endblock %}

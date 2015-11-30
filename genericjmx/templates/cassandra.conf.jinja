@@ -1,13 +1,10 @@
-{% import 'jvm-sun-hotspot-macros.jinja' as jvm -%}
-# This is the monitoring configuration for Cassandra 2.1.x and earlier.
-# Look for CASSANDRA_HOST and CASSANDRA_PORT to adjust your configuration file.
-LoadPlugin java
-<Plugin "java">
-    JVMARG "-Djava.class.path=/opt/stackdriver/collectd/share/collectd/java/collectd-api.jar:/opt/stackdriver/collectd/share/collectd/java/generic-jmx.jar"
-    LoadPlugin "org.collectd.java.GenericJMX"
-
-    <Plugin "GenericJMX">
-        <MBean "cassandra_storageservice">
+{% extends "jmx-metrics-base.jinja" %}
+{% block target %}Cassandra 2.1.x and earlier{% endblock %}
+{% block service %}Cassandra{% endblock %}
+{% block jmx_host_port_prefix %}CASSANDRA{% endblock %}
+{% block jmx_port %}7199{% endblock %}
+{% block mbean_list %}
+        {% call mbean("cassandra_storageservice", mbeans) -%}
             ObjectName "org.apache.cassandra.db:type=StorageService"
             <Value>
                 Type "gauge"
@@ -21,9 +18,9 @@ LoadPlugin java
                 Table false
                 Attribute "ExceptionCount"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_commitlog">
+        {% call mbean("cassandra_commitlog", mbeans) -%}
             ObjectName "org.apache.cassandra.db:type=Commitlog"
             <Value>
                 Type "gauge"
@@ -43,9 +40,9 @@ LoadPlugin java
                 Table false
                 Attribute "TotalCommitlogSize"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_compactionmanager">
+        {% call mbean("cassandra_compactionmanager", mbeans) -%}
             ObjectName "org.apache.cassandra.db:type=CompactionManager"
             <Value>
                 Type "gauge"
@@ -59,9 +56,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_stage_MutationStage">
+        {% call mbean("cassandra_stage_MutationStage", mbeans) -%}
             ObjectName "org.apache.cassandra.request:type=MutationStage"
             <Value>
                 Type "gauge"
@@ -87,9 +84,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_stage_ReadRepairStage">
+        {% call mbean("cassandra_stage_ReadRepairStage", mbeans) -%}
             ObjectName "org.apache.cassandra.request:type=ReadRepairStage"
             <Value>
                 Type "gauge"
@@ -115,9 +112,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_stage_ReadStage">
+        {% call mbean("cassandra_stage_ReadStage", mbeans) -%}
             ObjectName "org.apache.cassandra.request:type=ReadStage"
             <Value>
                 Type "gauge"
@@ -143,9 +140,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_stage_ReplicateOnWriteStage">
+        {% call mbean("cassandra_stage_ReplicateOnWriteStage", mbeans) -%}
             ObjectName "org.apache.cassandra.request:type=ReplicateOnWriteStage"
             <Value>
                 Type "gauge"
@@ -171,9 +168,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_stage_RequestResponseStage">
+        {% call mbean("cassandra_stage_RequestResponseStage", mbeans) -%}
             ObjectName "org.apache.cassandra.request:type=RequestResponseStage"
             <Value>
                 Type "gauge"
@@ -199,9 +196,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_AntiEntropySessions">
+        {% call mbean("cassandra_internal_AntiEntropySessions", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=AntiEntropySessions"
             <Value>
                 Type "gauge"
@@ -227,9 +224,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_AntiEntropyStage">
+        {% call mbean("cassandra_internal_AntiEntropyStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=AntiEntropyStage"
             <Value>
                 Type "gauge"
@@ -255,9 +252,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_FlushWriter">
+        {% call mbean("cassandra_internal_FlushWriter", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=FlushWriter"
             <Value>
                 Type "gauge"
@@ -283,9 +280,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_GossipStage">
+        {% call mbean("cassandra_internal_GossipStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=GossipStage"
             <Value>
                 Type "gauge"
@@ -311,9 +308,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_HintedHandoff">
+        {% call mbean("cassandra_internal_HintedHandoff", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=HintedHandoff"
             <Value>
                 Type "gauge"
@@ -339,9 +336,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_InternalResponseStage">
+        {% call mbean("cassandra_internal_InternalResponseStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=InternalResponseStage"
             <Value>
                 Type "gauge"
@@ -367,9 +364,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_MemtablePostFlusher">
+        {% call mbean("cassandra_internal_MemtablePostFlusher", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=MemtablePostFlusher"
             <Value>
                 Type "gauge"
@@ -395,9 +392,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_MigrationStage">
+        {% call mbean("cassandra_internal_MigrationStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=MigrationStage"
             <Value>
                 Type "gauge"
@@ -423,9 +420,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_MiscStage">
+        {% call mbean("cassandra_internal_MiscStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=MiscStage"
             <Value>
                 Type "gauge"
@@ -451,9 +448,9 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "cassandra_internal_StreamStage">
+        {% call mbean("cassandra_internal_StreamStage", mbeans) -%}
             ObjectName "org.apache.cassandra.internal:type=StreamStage"
             <Value>
                 Type "gauge"
@@ -479,64 +476,5 @@ LoadPlugin java
                 Table false
                 Attribute "CompletedTasks"
             </Value>
-        </MBean>
-
-        <Connection>
-            # When using non-standard Cassandra configurations, replace the below with
-            #ServiceURL "service:jmx:rmi:///jndi/rmi://CASSANDRA_HOST:CASSANDRA_PORT/jmxrmi"
-            ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi"
-            InstancePrefix "cassandra"
-
-            Collect "cassandra_storageservice"
-            Collect "cassandra_commitlog"
-            Collect "cassandra_compactionmanager"
-            Collect "cassandra_stage_MutationStage"
-            Collect "cassandra_stage_ReadRepairStage"
-            Collect "cassandra_stage_ReadStage"
-            Collect "cassandra_stage_ReplicateOnWriteStage"
-            Collect "cassandra_stage_RequestResponseStage"
-            Collect "cassandra_internal_AntiEntropySessions"
-            Collect "cassandra_internal_AntiEntropyStage"
-            Collect "cassandra_internal_FlushWriter"
-            Collect "cassandra_internal_GossipStage"
-            Collect "cassandra_internal_HintedHandoff"
-            Collect "cassandra_internal_InternalResponseStage"
-            Collect "cassandra_internal_MemtablePostFlusher"
-            Collect "cassandra_internal_MigrationStage"
-            Collect "cassandra_internal_MiscStage"
-            Collect "cassandra_internal_StreamStage"
-        </Connection>
-
-        {{ jvm.metrics(jmx_port=7199, jmx_port_alt_name='CASSANDRA_PORT', jmx_host_alt_name='CASSANDRA_HOST', service='Cassandra') }}
-    </Plugin>
-</Plugin>
-
-LoadPlugin match_regex
-LoadPlugin target_set
-LoadPlugin target_replace
-<Chain "GenericJMX_cassandra">
-    <Rule "rewrite_genericjmx_to_cassandra">
-        <Match regex>
-            Plugin "^GenericJMX$"
-            PluginInstance "^cassandra.*$"
-        </Match>
-        <Target "replace">
-            PluginInstance "cassandra" ""
-        </Target>
-        <Target "set">
-            Plugin "cassandra"
-        </Target>
-        Target "return"
-    </Rule>
-</Chain>
-
-<Chain "PreCache">
-    <Rule "jump_to_GenericJMX_cassandra">
-        <Target "jump">
-            Chain "GenericJMX_cassandra"
-        </Target>
-    </Rule>
-</Chain>
-PreCacheChain "PreCache"
-
-{{ jvm.chains() }}
+        {%- endcall %}
+{% endblock mbean_list %}
