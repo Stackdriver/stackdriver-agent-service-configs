@@ -1,10 +1,5 @@
 {% import 'jvm-sun-hotspot-macros.jinja' as jvm %}
-{% macro mbean(name, mbean_list) %}
-  {% do mbean_list.append(name) %}
-        <MBean "{{ name }}">
-            {{ caller() }}
-        </MBean>
-{% endmacro %}
+{% from 'jvm-sun-hotspot-macros.jinja' import mbean %}
 {% block header_comment %}
 # This is the monitoring configuration for {% block target %}standalone JVMs{% endblock %}.
 # Look for {% block host_port_variables %}{% block jmx_host_alt_name %}{% block jmx_host_port_prefix %}JMX{% endblock %}_HOST{% endblock %} and {% block jmx_port_alt_name %}{{ self.jmx_host_port_prefix() }}_PORT{% endblock %}{% endblock host_port_variables %} to adjust your configuration file.
@@ -39,7 +34,7 @@ LoadPlugin java
 
 {% endblock non_java_metrics %}
 {% block jvm_metrics %}
-        {{ jvm.metrics(jmx_port=self.jmx_port(), jmx_port_alt_name=self.jmx_port_alt_name(), jmx_host_alt_name=self.jmx_host_alt_name(), service=self.service()) }}
+        {{- jvm.metrics(jmx_port=self.jmx_port(), jmx_port_alt_name=self.jmx_port_alt_name(), jmx_host_alt_name=self.jmx_host_alt_name(), service=self.service()) }}
 {% endblock jvm_metrics %}
     </Plugin>
 </Plugin>

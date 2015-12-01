@@ -1,5 +1,12 @@
-{% macro metrics(jmx_port='', jmx_host='localhost', jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST', service='JVM') -%}
-        <MBean "jvm_localhost_Threading">
+{% macro mbean(name, mbean_list) %}
+  {% do mbean_list.append(name) %}
+        <MBean "{{ name }}">
+            {{ caller() }}
+        </MBean>
+{% endmacro %}
+{% set jvm_mbeans = [] %}
+{% macro metrics(jmx_port='', jmx_host='localhost', jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST', service='JVM', mbean=mbean) -%}
+        {% call mbean("jvm_localhost_Threading", jvm_mbeans) -%}
             ObjectName "java.lang:type=Threading"
             <Value>
                 Type "gauge"
@@ -19,9 +26,9 @@
                 Table false
                 Attribute "PeakThreadCount"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "jvm_localhost_Memory">
+        {% call mbean("jvm_localhost_Memory", jvm_mbeans) -%}
             ObjectName "java.lang:type=Memory"
             <Value>
                 Type "memory"
@@ -59,9 +66,9 @@
                 Table false
                 Attribute "NonHeapMemoryUsage.max"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "jvm_localhost_Runtime">
+        {% call mbean("jvm_localhost_Runtime", jvm_mbeans) -%}
             ObjectName "java.lang:type=Runtime"
             <Value>
                 Type "counter"
@@ -69,9 +76,9 @@
                 Table false
                 Attribute "Uptime"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "jvm_localhost_os">
+        {% call mbean("jvm_localhost_os", jvm_mbeans) -%}
             ObjectName "java.lang:type=OperatingSystem"
             <Value>
                 Type "gauge"
@@ -85,9 +92,9 @@
                 Table false
                 Attribute "ProcessCpuTime"
             </Value>
-        </MBean>
+        {%- endcall %}
 
-        <MBean "jvm_localhost_gc">
+        {% call mbean("jvm_localhost_gc", jvm_mbeans) -%}
             ObjectName "java.lang:type=GarbageCollector,name=*"
             InstanceFrom "name"
             <Value>
@@ -102,7 +109,7 @@
                 Table false
                 Attribute "CollectionTime"
             </Value>
-        </MBean>
+        {%- endcall %}
 
         <Connection>
             {% if jmx_port %}
@@ -114,11 +121,9 @@
             {% endif %}
             InstancePrefix "jvm"
 
-            Collect "jvm_localhost_Threading"
-            Collect "jvm_localhost_Memory"
-            Collect "jvm_localhost_Runtime"
-            Collect "jvm_localhost_os"
-            Collect "jvm_localhost_gc"
+    {% for mbean in jvm_mbeans %}
+            Collect "{{ mbean }}"
+    {% endfor %}
         </Connection>
 {%- endmacro %}
 
