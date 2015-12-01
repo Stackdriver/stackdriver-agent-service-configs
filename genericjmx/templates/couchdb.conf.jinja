@@ -1,0 +1,110 @@
+{#
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+{% extends "curl_json-metrics-base.jinja" %}
+{% block target %}CouchDB{% endblock %}
+{% block service %}CouchDB{% endblock %}
+{% block host_port_prefix %}COUCHDB{% endblock %}
+{% block port %}5984{% endblock %}
+{% block url_suffix %}_stats{% endblock %}
+{% block key_list %}
+        <Key "couchdb/database_writes/current">
+            Type "counter"
+        </Key>
+        <Key "couchdb/database_reads/current">
+            Type "counter"
+        </Key>
+        <Key "couchdb/open_databases/current">
+            Type "gauge"
+        </Key>
+        <Key "couchdb/open_os_files/current">
+            Type "gauge"
+        </Key>
+        <Key "couchdb/request_time/current">
+            Type "gauge"
+        </Key>
+        <Key "httpd/bulk_requests/current">
+            Type "counter"
+        </Key>
+        <Key "httpd/requests/current">
+            Type "counter"
+        </Key>
+        <Key "httpd/temporary_view_reads/current">
+            Type "counter"
+        </Key>
+        <Key "httpd/view_reads/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/COPY/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/DELETE/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/GET/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/HEAD/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/MOVE/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/POST/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_request_methods/PUT/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/200/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/201/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/202/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/301/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/304/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/400/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/401/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/403/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/404/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/405/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/409/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/412/current">
+            Type "counter"
+        </Key>
+        <Key "httpd_status_codes/500/current">
+            Type "counter"
+        </Key>
+{% endblock key_list %}

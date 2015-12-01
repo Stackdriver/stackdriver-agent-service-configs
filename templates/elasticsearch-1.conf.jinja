@@ -1,0 +1,122 @@
+{#
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+{% extends "curl_json-metrics-base.jinja" %}
+{% block target %}Elasticsearch 1.0.x and later{% endblock %}
+{% block service %}Elasticsearch{% endblock %}
+{% block host_port_prefix %}ELASTICSEARCH{% endblock %}
+{% block port %}9200{% endblock %}
+{% block url_suffix %}_nodes/_local/stats/{% endblock %}
+{% block key_list %}
+        <Key "nodes/*/indices/docs/count">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/indices/docs/deleted">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/indices/store/size_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/indices/indexing/index_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/indexing/index_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/indexing/delete_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/indexing/delete_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/exists_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/exists_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/missing_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/get/missing_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/search/query_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/search/query_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/search/fetch_total">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/search/fetch_time_in_millis">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/filter_cache/memory_size_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/indices/filter_cache/evictions">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/indices/fielddata/memory_size_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/indices/fielddata/evictions">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/process/open_file_descriptors">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/mem/heap_used_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/mem/heap_committed_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/mem/non_heap_used_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/mem/non_heap_committed_in_bytes">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/threads/count">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/threads/peak_count">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/jvm/gc/collection_count">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/transport/rx_size_in_bytes">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/transport/tx_size_in_bytes">
+            Type "counter"
+        </Key>
+        <Key "nodes/*/transport/server_open">
+            Type "gauge"
+        </Key>
+        <Key "nodes/*/http/current_open">
+            Type "gauge"
+        </Key>
+{% endblock key_list %}
