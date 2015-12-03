@@ -1,0 +1,87 @@
+{#
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+{% macro key(name, type) %}
+        <Key "{{ name }}">
+            Type "{{ type }}"
+        </Key>
+{% endmacro %}
+{% block header_comment %}
+# This is the monitoring configuration for {% block target %}{% endblock %}.
+# Look for {% block host_port_variables %}{% block host_alt_name %}{% block host_port_prefix %}{% endblock %}_HOST{% endblock %} and {% block port_alt_name %}{{ self.host_port_prefix() }}_PORT{% endblock %}{% endblock host_port_variables %} to adjust your configuration file.
+{% endblock header_comment %}
+LoadPlugin curl_json
+<Plugin "curl_json">
+    {% block service_url %}
+    {% block service_url_start %}
+    # When using non-standard {% block service %}{% endblock %} configurations, replace the below with
+    #<URL "http://{{ self.host_alt_name() }}:{{ self.port_alt_name() }}/{% block url_suffix %}{% endblock %}">
+    <URL "http://{% block host %}localhost{% endblock %}:{% block port %}{% endblock %}/{{ self.url_suffix() }}">
+    {% endblock service_url_start %}
+        Instance "{% block plugin_instance %}{{ self.service()|lower }}{% endblock %}"
+
+        {% block key_list %}
+        {% endblock %}
+    {% block service_url_end %}
+    </URL>
+    {% endblock service_url_end %}
+    {% endblock service_url %}
+</Plugin>
+
+LoadPlugin match_regex
+LoadPlugin target_set
+LoadPlugin target_replace
+{% block extra_plugins %}
+{% endblock %}
+{% block service_chains %}
+<Chain "curl_json_{{ self.service()|lower }}">
+    <Rule "rewrite_curl_json_to_{{ self.service()|lower }}">
+        <Match regex>
+            Plugin "^curl_json$"
+            PluginInstance "{% block plugin_instance_regex %}^{% block plugin_instance_prefix %}{{ self.plugin_instance() }}{% endblock %}.*${% endblock %}"
+        </Match>
+        <Target "replace">
+            PluginInstance "^{{ self.plugin_instance_prefix() }}" ""
+        </Target>
+        <Target "set">
+            Plugin "{{ self.service()|lower }}"
+        </Target>
+    </Rule>
+    {% block empty_plugininstance_rule %}
+    <Rule "rewrite_empty_plugininstance">
+        <Match regex>
+            PluginInstance "^$"
+        </Match>
+        <Target "set">
+            PluginInstance "localhost"
+        </Target>
+    </Rule>
+    {% endblock empty_plugininstance_rule %}
+    {% block extra_rules %}
+    {% endblock %}
+    <Rule "go_back">
+        Target "return"
+    </Rule>
+</Chain>
+
+<Chain "PreCache">
+    <Rule "jump_to_curl_json_{{ self.service()|lower }}">
+        <Target "jump">
+            Chain "curl_json_{{ self.service()|lower }}"
+        </Target>
+    </Rule>
+</Chain>
+PreCacheChain "PreCache"
+{% endblock service_chains %}
