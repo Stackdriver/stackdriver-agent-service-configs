@@ -1,0 +1,41 @@
+{#
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+# This is the monitoring configuration for PostgreSQL.
+# Make sure the statistics collector is enabled in your PostgreSQL configuration.
+# NOTE: This configuration needs to be hand-edited in order to work.
+# Look for DATABASE_NAME, STATS_USER, STATS_PASS, POSTGRESQL_HOST and POSTGRESQL_PORT to adjust your configuration file.
+LoadPlugin postgresql
+<Plugin "postgresql">
+    # Each database needs a separate Database section.
+    # Replace DATABASE_NAME in the Database section with the name of the database.
+    <Database "DATABASE_NAME">
+        # Host and port are only used for TCP/IP connections.
+        # Leaving them out indicates you wish to connect via domain sockets.
+        # When using non-standard PostgreSQL configurations, replace the below with
+        ##Host "POSTGRESQL_HOST"
+        ##Port "POSTGRESQL_PORT"
+        #Host "localhost"
+        #Port "5432"
+        User "STATS_USER"
+        Password "STATS_PASS"
+        Query backends
+        Query transactions
+        Query queries
+        Query table_states
+        Query disk_io
+        Query disk_usage
+    </Database>
+</Plugin>

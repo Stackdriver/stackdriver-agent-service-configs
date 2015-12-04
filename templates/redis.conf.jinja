@@ -1,0 +1,29 @@
+{#
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+# This is the monitoring configuration for Redis.
+# Make sure you've installed the hiredis/libhiredis packages.
+# Look for REDIS_HOST and REDIS_PORT to adjust your configuration file.
+LoadPlugin redis
+<Plugin "redis">
+    <Node "mynode">
+        # When using non-standard Redis configurations, replace the below with
+        #Host "REDIS_HOST"
+        #Port "REDIS_PORT"
+        Host "localhost"
+        Port "6379"
+        Timeout 2000
+    </Node>
+</Plugin>
