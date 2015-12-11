@@ -15,9 +15,10 @@ limitations under the License.
 #}
 {% extends "jmx-metrics-base.jinja" %}
 {% block header_comment %}
-# This is the monitoring configuration for standalone JVMs.
-# Replace {% block jmx_host_alt_name %}JMX_HOST{% endblock %} and {% block jmx_port_alt_name %}JMX_PORT{% endblock %} below with the values configured in your JVM deployment.
+{{ super() -}}
+# Replace {{ self.jmx_port_alt_name() }} below with the value configured in your JVM deployment.
 {% endblock header_comment %}
 {% block service %}JVM{% endblock %}
+{% block jmx_port %}{{ self.jmx_port_alt_name() }}{% endblock %}
 {% block non_java_metrics %}{% endblock %}
 {% block service_chains %}{% endblock %}
