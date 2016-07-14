@@ -86,7 +86,7 @@ limitations under the License.
                 Type "counter"
                 InstancePrefix "regionserver-blockCacheEvictedCount"
                 Table false
-                Attribute "blockCacheEvictedCount"
+                Attribute "blockCacheEvictionCount"
             </Value>
             <Value>
                 Type "gauge"
@@ -100,12 +100,22 @@ limitations under the License.
                 Table false
                 Attribute "blockCacheHitCount"
             </Value>
+
+            # The two attributes below are identical; one is a renamed version of the other.
             <Value>
                 Type "gauge"
                 InstancePrefix "regionserver-blockCacheHitPercent"
                 Table false
-                Attribute "blockCacheHitPercent"
+                # This is the name used in HBase 0.98 and earlier.
+                Attribute "blockCountHitPercent"
             </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "regionserver-blockCacheHitPercent"
+                Table false
+                Attribute "blockCacheCountHitPercent"
+            </Value>
+
             <Value>
                 Type "counter"
                 InstancePrefix "regionserver-blockCacheMissCount"
