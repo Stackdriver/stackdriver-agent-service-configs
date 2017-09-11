@@ -602,4 +602,148 @@ limitations under the License.
                 Attribute "Value"
             </Value>
         {%- endcall %}
+        {% call mbean("cassandra_Cache_KeyCache-HitRate", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=HitRate"
+            <Value>
+                Type "gauge"
+                InstancePrefix "cache_key_cache-hit_rate"
+                Table false
+                Attribute "Value"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_ClientRequest_Read-Latency", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-1m"
+                Table false
+                Attribute "OneMinuteRate"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-15m"
+                Table false
+                Attribute "FifteenMinuteRate"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-max"
+                Table false
+                Attribute "Max"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-99p"
+                Table false
+                Attribute "99thPercentile"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-95p"
+                Table false
+                Attribute "95thPercentile"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_read-latency-50p"
+                Table false
+                Attribute "50thPercentile"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_ClientRequest_Write-Latency", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-1m"
+                Table false
+                Attribute "OneMinuteRate"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-15m"
+                Table false
+                Attribute "FifteenMinuteRate"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-max"
+                Table false
+                Attribute "Max"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-99p"
+                Table false
+                Attribute "99thPercentile"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-95p"
+                Table false
+                Attribute "95thPercentile"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "client_request_write-latency-50p"
+                Table false
+                Attribute "50thPercentile"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_ColumnFamily-MaxRowSize", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=ColumnFamily,name=MaxRowSize"
+            <Value>
+                Type "gauge"
+                InstancePrefix "column_family-max_row_size"
+                Table false
+                Attribute "Value"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_ColumnFamily-CompressionRatio", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=ColumnFamily,name=CompressionRatio"
+            <Value>
+                Type "gauge"
+                InstancePrefix "column_family-compression_ratio"
+                Table false
+                Attribute "Value"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_DroppedMessage_MUTATION-Dropped", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=DroppedMessage,scope=MUTATION,name=Dropped"
+            <Value>
+                Type "counter"
+                InstancePrefix "dropped_message_mutation-dropped-count"
+                Table false
+                Attribute "Count"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "dropped_message_mutation-dropped-1m"
+                Table false
+                Attribute "OneMinuteRate"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_DroppedMessage_READ-Dropped", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=DroppedMessage,scope=READ,name=Dropped"
+            <Value>
+                Type "counter"
+                InstancePrefix "dropped_message_read-dropped-count"
+                Table false
+                Attribute "Count"
+            </Value>
+            <Value>
+                Type "gauge"
+                InstancePrefix "dropped_message_read-dropped-1m"
+                Table false
+                Attribute "OneMinuteRate"
+            </Value>
+        {%- endcall %}
+        {% call mbean("cassandra_FileCache-Hits", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=FileCache,name=Hits"
+            <Value>
+                Type "counter"
+                InstancePrefix "file_cache-hits"
+                Table false
+                Attribute "Count"
+            </Value>
+        {%- endcall %}
 {% endblock mbean_list %}
