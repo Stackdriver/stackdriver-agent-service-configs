@@ -613,80 +613,78 @@ limitations under the License.
         {%- endcall %}
         {% call mbean("cassandra_ClientRequest_Read-Latency", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
-            InstancePrefix "client_request_read-latency"
             <Value>
                 Type "gauge"
-                InstancePrefix "1m"
+                InstancePrefix "client_request_read-latency-1m"
                 Table false
                 Attribute "OneMinuteRate"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "15m"
+                InstancePrefix "client_request_read-latency-15m"
                 Table false
                 Attribute "FifteenMinuteRate"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "max"
+                InstancePrefix "client_request_read-latency-max"
                 Table false
                 Attribute "Max"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "99p"
+                InstancePrefix "client_request_read-latency-99p"
                 Table false
                 Attribute "99thPercentile"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "95p"
+                InstancePrefix "client_request_read-latency-95p"
                 Table false
                 Attribute "95thPercentile"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "50p"
+                InstancePrefix "client_request_read-latency-50p"
                 Table false
                 Attribute "50thPercentile"
             </Value>
         {%- endcall %}
         {% call mbean("cassandra_ClientRequest_Write-Latency", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
-            InstancePrefix "client_request_write-latency"
             <Value>
                 Type "gauge"
-                InstancePrefix "1m"
+                InstancePrefix "client_request_write-latency-1m"
                 Table false
                 Attribute "OneMinuteRate"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "15m"
+                InstancePrefix "client_request_write-latency-15m"
                 Table false
                 Attribute "FifteenMinuteRate"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "max"
+                InstancePrefix "client_request_write-latency-max"
                 Table false
                 Attribute "Max"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "99p"
+                InstancePrefix "client_request_write-latency-99p"
                 Table false
                 Attribute "99thPercentile"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "95p"
+                InstancePrefix "client_request_write-latency-95p"
                 Table false
                 Attribute "95thPercentile"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "50p"
+                InstancePrefix "client_request_write-latency-50p"
                 Table false
                 Attribute "50thPercentile"
             </Value>
@@ -711,32 +709,30 @@ limitations under the License.
         {%- endcall %}
         {% call mbean("cassandra_DroppedMessage_MUTATION-Dropped", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=DroppedMessage,scope=MUTATION,name=Dropped"
-            InstancePrefix "dropped_message_mutation-dropped"
             <Value>
                 Type "counter"
-                InstancePrefix "count"
+                InstancePrefix "dropped_message_mutation-dropped-count"
                 Table false
                 Attribute "Count"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "1m"
+                InstancePrefix "dropped_message_mutation-dropped-1m"
                 Table false
                 Attribute "OneMinuteRate"
             </Value>
         {%- endcall %}
         {% call mbean("cassandra_DroppedMessage_READ-Dropped", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=DroppedMessage,scope=READ,name=Dropped"
-            InstancePrefix "dropped_message_mutation-dropped"
             <Value>
                 Type "counter"
-                InstancePrefix "count"
+                InstancePrefix "dropped_message_read-dropped-count"
                 Table false
                 Attribute "Count"
             </Value>
             <Value>
                 Type "gauge"
-                InstancePrefix "1m"
+                InstancePrefix "dropped_message_read-dropped-1m"
                 Table false
                 Attribute "OneMinuteRate"
             </Value>
