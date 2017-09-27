@@ -615,18 +615,6 @@ limitations under the License.
             ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
             <Value>
                 Type "gauge"
-                InstancePrefix "client_request_read-latency-1m"
-                Table false
-                Attribute "OneMinuteRate"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "client_request_read-latency-15m"
-                Table false
-                Attribute "FifteenMinuteRate"
-            </Value>
-            <Value>
-                Type "gauge"
                 InstancePrefix "client_request_read-latency-max"
                 Table false
                 Attribute "Max"
@@ -652,18 +640,6 @@ limitations under the License.
         {%- endcall %}
         {% call mbean("cassandra_ClientRequest_Write-Latency", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
-            <Value>
-                Type "gauge"
-                InstancePrefix "client_request_write-latency-1m"
-                Table false
-                Attribute "OneMinuteRate"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "client_request_write-latency-15m"
-                Table false
-                Attribute "FifteenMinuteRate"
-            </Value>
             <Value>
                 Type "gauge"
                 InstancePrefix "client_request_write-latency-max"
@@ -715,12 +691,6 @@ limitations under the License.
                 Table false
                 Attribute "Count"
             </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "dropped_message_mutation-dropped-1m"
-                Table false
-                Attribute "OneMinuteRate"
-            </Value>
         {%- endcall %}
         {% call mbean("cassandra_DroppedMessage_READ-Dropped", mbeans) -%}
             ObjectName "org.apache.cassandra.metrics:type=DroppedMessage,scope=READ,name=Dropped"
@@ -729,12 +699,6 @@ limitations under the License.
                 InstancePrefix "dropped_message_read-dropped-count"
                 Table false
                 Attribute "Count"
-            </Value>
-            <Value>
-                Type "gauge"
-                InstancePrefix "dropped_message_read-dropped-1m"
-                Table false
-                Attribute "OneMinuteRate"
             </Value>
         {%- endcall %}
         {% call mbean("cassandra_FileCache-Hits", mbeans) -%}
