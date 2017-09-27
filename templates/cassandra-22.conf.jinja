@@ -602,8 +602,8 @@ limitations under the License.
                 Attribute "Value"
             </Value>
         {%- endcall %}
-        {% call mbean("cassandra_Cache_KeyCache-HitRate", mbeans) -%}
-            ObjectName "org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=HitRate"
+        {% call mbean("cassandra_Cache_KeyCache-Hits", mbeans) -%}
+            ObjectName "org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=Hits"
             <Value>
                 Type "gauge"
                 InstancePrefix "cache_key_cache-hit_rate"
