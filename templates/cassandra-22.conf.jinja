@@ -701,13 +701,4 @@ limitations under the License.
                 Attribute "Count"
             </Value>
         {%- endcall %}
-        {% call mbean("cassandra_FileCache-Hits", mbeans) -%}
-            ObjectName "org.apache.cassandra.metrics:type=FileCache,name=Hits"
-            <Value>
-                Type "counter"
-                InstancePrefix "file_cache-hits"
-                Table false
-                Attribute "Count"
-            </Value>
-        {%- endcall %}
 {% endblock mbean_list %}
