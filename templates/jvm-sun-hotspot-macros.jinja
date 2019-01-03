@@ -20,7 +20,7 @@ limitations under the License.
         </MBean>
 {% endmacro %}
 {% set jvm_mbeans = [] %}
-{% macro metrics(jmx_port='', jmx_host='localhost', jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST', service='JVM', mbean=mbean) -%}
+{% macro metrics(jmx_port='', jmx_host='localhost', jmx_port_alt_name='JMX_PORT', jmx_host_alt_name='JMX_HOST', service='JVM') -%}
         {% call mbean("jvm_localhost_Threading", jvm_mbeans) -%}
             ObjectName "java.lang:type=Threading"
             <Value>
