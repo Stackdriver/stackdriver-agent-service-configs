@@ -18,6 +18,19 @@ limitations under the License.
             Type "{{ type }}"
         </Key>
 {% endmacro %}
+{% macro url(url_suffix) %}
+    {% block service_url_start scoped %}
+    # When using non-standard {% block service %}{% endblock %} configurations, replace the below with
+    #<URL "http://{{ self.host_alt_name() }}:{{ self.port_alt_name() }}/{{ url_suffix }}">
+    <URL "http://{% block host %}localhost{% endblock %}:{% block port %}{% endblock %}/{{ url_suffix }}">
+    {% endblock service_url_start %}
+        Instance "{% block plugin_instance %}{{ self.service()|lower }}{% endblock %}"
+
+{{ caller() -}}
+    {% block service_url_end %}
+    </URL>
+    {% endblock service_url_end %}
+{% endmacro %}
 {% block header_comment %}
 # This is the monitoring configuration for {% block target %}{% endblock %}.
 # Look for {% block host_port_variables %}{% block host_alt_name %}{% block host_port_prefix %}{% endblock %}_HOST{% endblock %} and {% block port_alt_name %}{{ self.host_port_prefix() }}_PORT{% endblock %}{% endblock host_port_variables %} to adjust your configuration file.
@@ -25,18 +38,10 @@ limitations under the License.
 LoadPlugin curl_json
 <Plugin "curl_json">
     {% block service_url %}
-    {% block service_url_start %}
-    # When using non-standard {% block service %}{% endblock %} configurations, replace the below with
-    #<URL "http://{{ self.host_alt_name() }}:{{ self.port_alt_name() }}/{% block url_suffix %}{% endblock %}">
-    <URL "http://{% block host %}localhost{% endblock %}:{% block port %}{% endblock %}/{{ self.url_suffix() }}">
-    {% endblock service_url_start %}
-        Instance "{% block plugin_instance %}{{ self.service()|lower }}{% endblock %}"
-
-        {% block key_list %}
-        {% endblock %}
-    {% block service_url_end %}
-    </URL>
-    {% endblock service_url_end %}
+    {% set url_suffix %}{% block url_suffix %}{% endblock %}{% endset %}
+    {% call url(url_suffix) %}
+{% block key_list %}{% endblock %}
+    {% endcall %}
     {% endblock service_url %}
 </Plugin>
 
