@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Copyright 2015 Google Inc. All Rights Reserved.
 #
@@ -20,7 +20,7 @@ Renders a template to a collectd config.
 Example usage:
   cd etc/collectd.d; \
   for f in *.conf; do \
-    python ../../templates/render_templates.py $f.jinja > $f; \
+    python3 ../../templates/render_templates.py $f.jinja > $f; \
   done
 """
 
@@ -34,4 +34,4 @@ env = jinja2.Environment(
     lstrip_blocks=True,
     extensions=['jinja2.ext.do'])
 
-print env.get_template(sys.argv[1]).render()
+print(env.get_template(sys.argv[1]).render())
